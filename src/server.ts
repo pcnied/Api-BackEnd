@@ -3,6 +3,7 @@ import "dotenv/config";
 import express, { Request, Response } from "express";
 import { UserController } from "./controllers";
 import { validateDataUser, validateLoginUser } from "./middlewares";
+import { AnotationRepository } from "./repositories";
 
 const app = express();
 const userController = new UserController();
@@ -18,6 +19,8 @@ app.use(express.urlencoded({ extended: false }));
 app.listen(process.env.PORT, () =>
   console.log("Servidor iniciado", process.env.PORT)
 );
+
+export const anotationRepository = new AnotationRepository();
 
 app.get("/", (request: Request, response: Response) => {
   return response.send({ message: "OK" });
