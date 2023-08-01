@@ -7,7 +7,7 @@ type DeleteAnotationRequestDTO = {
 
 type DeleteAnotationResponseDTO = {
   status: string;
-  anotationDeleted: Anotation;
+  anotation: Anotation;
 };
 
 export class DeleteAnotationUseCase {
@@ -16,15 +16,15 @@ export class DeleteAnotationUseCase {
   execute(data: DeleteAnotationRequestDTO): DeleteAnotationResponseDTO {
     const { id } = data;
 
-    const anotationDeleted = this.anotationRepository.deleteAnotation(id);
+    const anotation = this.anotationRepository.deleteAnotation(id);
 
-    if (!anotationDeleted) {
-      throw new Error("Transação não encontrada para este usuário!");
+    if (!anotation) {
+      throw new Error("Anotação não encontrada para este usuário!");
     }
 
     return {
-      status: "Transação deletada com sucesso!",
-      anotationDeleted,
+      status: "Anotação deletada com sucesso!",
+      anotation,
     };
   }
 }

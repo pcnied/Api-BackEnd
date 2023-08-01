@@ -9,10 +9,10 @@ export type UpdateAnotationRequestDTO = {
 
 export type UpdateAnotationResponseDTO = {
   status: string;
-  anotation: Anotation;
+  anotation: Anotation | undefined;
 };
 
-class UpdateAnotationUseCase {
+export class UpdateAnotationUseCase {
   constructor(private anotationRepository: AnotationRepository) {}
 
   execute(
@@ -20,5 +20,22 @@ class UpdateAnotationUseCase {
     data: UpdateAnotationRequestDTO
   ): UpdateAnotationResponseDTO {
     const { title, value, date } = data;
+
+    const anotation = this.anotationRepository.getAnotation(id);
+
+    if (!anotation) {
+      throw new Error("Anotação não encontrada para este usuário!");
+    }
+
+    const anotationUpdated = this.anotationRepository.updateAnotation(id, {
+      title: title || anotation.title,
+      value: value || anotation.value,
+      date: date || anotation.date,
+    });
+
+    return {
+      status: "Anotação atualizada com sucesso!",
+      anotation: anotationUpdated,
+    };
   }
 }

@@ -10,7 +10,7 @@ export function validateDataUser(
   if (!name || !email || !password) {
     return res.status(400).json({
       success: false,
-      message: "Todos os dados precisam ser informados.",
+      message: "Todos os dados precisam ser informados (nome, e-mail e senha).",
     });
   }
 

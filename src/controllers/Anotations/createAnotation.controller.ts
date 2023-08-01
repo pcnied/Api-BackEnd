@@ -8,11 +8,11 @@ export class CreateAnotationController {
       const { userId } = req.params;
       const { title, value, date } = req.body;
 
-      const createTransactionUseCase = new CreateAnotationUseCase(
+      const createAnotationUseCase = new CreateAnotationUseCase(
         anotationRepository
       );
 
-      const response = createTransactionUseCase.execute({
+      const response = createAnotationUseCase.execute({
         userId,
         title,
         value,

@@ -15,5 +15,16 @@ export class GetAnotationUseCase {
 
   execute(data: GetAnotationRequestDTO): GetAnotationResponseDTO {
     const { id } = data;
+
+    const anotation = this.anotationRepository.getAnotation(id);
+
+    if (!anotation) {
+      throw new Error("Anotação não encontrada para este usuário!");
+    }
+
+    return {
+      status: "Anotação encontrada com sucesso!",
+      anotation,
+    };
   }
 }

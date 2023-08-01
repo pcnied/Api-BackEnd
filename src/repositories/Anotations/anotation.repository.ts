@@ -25,14 +25,30 @@ export class AnotationRepository extends BaseRepository<User> {
     return databaseAnotations.filter((a) => a.userId === userId);
   }
 
-  updateTransaction(
+  getAnotation(id: string): Anotation | undefined {
+    const anotation = databaseAnotations.find((a) => a.id === id);
+
+    if (!anotation) {
+      return undefined;
+    }
+
+    return anotation;
+  }
+
+  updateAnotation(
     id: string,
     item: { title: string; value: string; date: string }
-  ): Anotation {
+  ): Anotation | undefined {
     const index = databaseAnotations.findIndex((a) => a.id === id);
 
+    if (index === -1) {
+      return undefined;
+    }
+
     databaseAnotations[index].title = item.title;
-    databaseAnotations[index].title = item.value;
-    databaseAnotations[index].title = item.date;
+    databaseAnotations[index].value = item.value;
+    databaseAnotations[index].date = item.date;
+
+    return databaseAnotations[index];
   }
 }

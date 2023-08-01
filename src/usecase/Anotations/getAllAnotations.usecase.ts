@@ -11,16 +11,16 @@ export type GetAllAnotationsResponseDTO = {
 };
 
 export class GetAllAnotationsUseCase {
-  constructor(private userRepository: AnotationRepository) {}
+  constructor(private anotationRepository: AnotationRepository) {}
 
   execute(userId: string) {
-    const anotations = this.userRepository.getAllAnotations(userId);
+    const anotations = this.anotationRepository.getAllAnotations(userId);
 
     return {
       status:
         anotations.length > 0
-          ? "Transações encontradas com sucesso!"
-          : "Nenhuma transação cadastrada ainda!",
+          ? "Anotações encontradas com sucesso!"
+          : "Nenhuma anotação cadastrada ainda!",
       anotations,
     };
   }

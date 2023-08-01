@@ -23,7 +23,7 @@ export class CreateAnotationUseCase {
     this.anotationRepository.createAnotation(anotation);
 
     return {
-      status: "Transação criada com sucesso!",
+      status: "Anotação criada com sucesso!",
       anotation,
     };
   }
