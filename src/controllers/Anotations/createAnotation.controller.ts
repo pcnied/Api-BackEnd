@@ -6,7 +6,7 @@ export class CreateAnotationController {
   public execute(req: Request, res: Response) {
     try {
       const { userId } = req.params;
-      const { title, value, date } = req.body;
+      const { title, description, date } = req.body;
 
       const createAnotationUseCase = new CreateAnotationUseCase(
         anotationRepository
@@ -15,7 +15,7 @@ export class CreateAnotationController {
       const response = createAnotationUseCase.execute({
         userId,
         title,
-        value,
+        description,
         date,
       });
 

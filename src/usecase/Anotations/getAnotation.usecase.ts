@@ -6,8 +6,9 @@ type GetAnotationRequestDTO = {
 };
 
 type GetAnotationResponseDTO = {
-  status: string;
-  anotation: Anotation;
+  message: string;
+  success: boolean;
+  anotation?: Anotation;
 };
 
 export class GetAnotationUseCase {
@@ -19,11 +20,15 @@ export class GetAnotationUseCase {
     const anotation = this.anotationRepository.getAnotation(id);
 
     if (!anotation) {
-      throw new Error("Anotação não encontrada para este usuário!");
+      return {
+        message: "Não foi possível encontrar a anotação. Tente novamente!",
+        success: false,
+      };
     }
 
     return {
-      status: "Anotação encontrada com sucesso!",
+      message: "Anotação encontrada com sucesso!",
+      success: true,
       anotation,
     };
   }

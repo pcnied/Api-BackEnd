@@ -1,4 +1,4 @@
-import { UsersRepository } from "../../repositories";
+import { usersRepository } from "../../server";
 
 export type LoginUserDTO = {
   email: string;
@@ -8,27 +8,25 @@ export type LoginUserDTO = {
 type ResponseLoginUser = {
   success: boolean;
   message: string;
-  data?: string;
+  id?: string;
 };
 
 export class LoginUser {
   execute(data: LoginUserDTO): ResponseLoginUser {
-    const repository = new UsersRepository();
-
-    const searchUser = repository.findUserByCredencials(data);
+    const searchUser = usersRepository.findUserByCredencials(data);
 
     if (!searchUser) {
       return {
         success: false,
         message: "O usuário não foi encontrado pelo ID.",
-        data: searchUser,
+        id: searchUser,
       };
     }
 
     return {
       success: true,
       message: "Login efetuado com sucesso!",
-      data: searchUser,
+      id: searchUser,
     };
   }
 }

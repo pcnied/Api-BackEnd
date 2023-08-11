@@ -4,15 +4,22 @@ export class Anotation {
   private _userId: string;
   private _id: string;
   private _title: string;
-  private _value: string;
+  private _description: string;
   private _date: string;
+  private _archived: boolean;
 
-  constructor(userId: string, title: string, value: string, date: string) {
+  constructor(
+    userId: string,
+    title: string,
+    description: string,
+    date: string
+  ) {
     this._userId = userId;
     this._id = uuid();
     this._title = title;
-    this._value = value;
+    this._description = description;
     this._date = date;
+    this._archived = false;
   }
 
   get userId(): string {
@@ -27,12 +34,16 @@ export class Anotation {
     return this._title;
   }
 
-  get value(): string {
-    return this._value;
+  get description(): string {
+    return this._description;
   }
 
   get date(): string {
     return this._date;
+  }
+
+  get archived(): boolean {
+    return this._archived;
   }
 
   set userId(userId: string) {
@@ -47,11 +58,15 @@ export class Anotation {
     this._title = title;
   }
 
-  set value(value: string) {
-    this._value = value;
+  set description(description: string) {
+    this._description = description;
   }
 
   set date(date: string) {
     this._date = date;
+  }
+
+  set archived(archived: boolean) {
+    this._archived = archived;
   }
 }

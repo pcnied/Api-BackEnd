@@ -3,13 +3,15 @@ import { AnotationRepository } from "../../repositories";
 
 export type UpdateAnotationRequestDTO = {
   title: string;
-  value: string;
+  description: string;
   date: string;
+  archived?: boolean;
 };
 
 export type UpdateAnotationResponseDTO = {
-  status: string;
-  anotation: Anotation | undefined;
+  message: string;
+  success: boolean;
+  anotation?: Anotation | undefined;
 };
 
 export class UpdateAnotationUseCase {
@@ -19,22 +21,27 @@ export class UpdateAnotationUseCase {
     id: string,
     data: UpdateAnotationRequestDTO
   ): UpdateAnotationResponseDTO {
-    const { title, value, date } = data;
+    const { title, description, date, archived } = data;
 
     const anotation = this.anotationRepository.getAnotation(id);
 
     if (!anotation) {
-      throw new Error("Anotação não encontrada para este usuário!");
+      return {
+        message: "Não foi possível atualizar a anotação. Tente novamente!",
+        success: false,
+      };
     }
 
     const anotationUpdated = this.anotationRepository.updateAnotation(id, {
       title: title || anotation.title,
-      value: value || anotation.value,
+      description: description || anotation.description,
       date: date || anotation.date,
+      archived: archived !== undefined ? archived : anotation.archived,
     });
 
     return {
-      status: "Anotação atualizada com sucesso!",
+      message: "Anotação atualizada com sucesso!",
+      success: true,
       anotation: anotationUpdated,
     };
   }

@@ -9,9 +9,9 @@ export function validateLoginUser(
 
   if (!email || !password) {
     return res.status(400).json({
-      success: false,
       message:
         "É preciso inserir um e-mail e uma senha para realizar o Login. Tente novamente!",
+      success: false,
     });
   }
 

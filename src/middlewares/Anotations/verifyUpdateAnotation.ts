@@ -5,11 +5,12 @@ export function verifyUpdateAnotation(
   res: Response,
   next: NextFunction
 ) {
-  const { title, value, date } = req.body;
+  const { title, description, date, archived } = req.body;
 
-  if (!title && !value && !date) {
+  if (!title && !description && !date && archived === undefined) {
     return res.status(400).json({
-      error: "É necessário editar pelo menos uma das propriedades.",
+      message: "É necessário editar pelo menos uma das propriedades.",
+      success: false,
     });
   }
 

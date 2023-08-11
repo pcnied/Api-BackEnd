@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { anotationRepository } from "../../server";
+import { usersRepository } from "../../server";
 
 export function verifyUserExist(
   req: Request,
@@ -8,11 +8,12 @@ export function verifyUserExist(
 ) {
   const { userId } = req.params;
 
-  const user = anotationRepository.getById(userId);
+  const user = usersRepository.getById(userId);
 
   if (!user) {
     return res.status(404).json({
-      status: "Usuário não encontrado pelo ID informado.",
+      message: "Usuário não encontrado pelo ID informado.",
+      success: false,
     });
   }
 

@@ -1,12 +1,7 @@
-import { databaseAnotations, databaseUsers } from "../../database";
-import { Anotation, User } from "../../models";
-import { BaseRepository } from "../baseRepository";
+import { databaseAnotations } from "../../database";
+import { Anotation } from "../../models";
 
-export class AnotationRepository extends BaseRepository<User> {
-  constructor() {
-    super(databaseUsers);
-  }
-
+export class AnotationRepository {
   createAnotation(anotation: Anotation): Anotation {
     databaseAnotations.push(anotation);
     return anotation;
@@ -17,12 +12,28 @@ export class AnotationRepository extends BaseRepository<User> {
     if (index === -1) {
       return undefined;
     }
+    console.log(databaseAnotations[index]);
 
+    const anotationDeleted = databaseAnotations[index];
     databaseAnotations.splice(index, 1);
+    return anotationDeleted;
   }
 
-  getAllAnotations(userId: string): Anotation[] {
-    return databaseAnotations.filter((a) => a.userId === userId);
+  getAllAnotations(
+    userId: string,
+    archived: boolean,
+    title?: string
+  ): Anotation[] {
+    let anotations = databaseAnotations.filter((a) => a.userId === userId);
+    if (archived !== undefined) {
+      anotations = anotations.filter((a) => a.archived === archived);
+    }
+
+    if (title) {
+      anotations = anotations.filter((a) => a.title.includes(title));
+    }
+
+    return anotations;
   }
 
   getAnotation(id: string): Anotation | undefined {
@@ -37,7 +48,12 @@ export class AnotationRepository extends BaseRepository<User> {
 
   updateAnotation(
     id: string,
-    item: { title: string; value: string; date: string }
+    item: {
+      title: string;
+      description: string;
+      date: string;
+      archived: boolean;
+    }
   ): Anotation | undefined {
     const index = databaseAnotations.findIndex((a) => a.id === id);
 
@@ -46,8 +62,9 @@ export class AnotationRepository extends BaseRepository<User> {
     }
 
     databaseAnotations[index].title = item.title;
-    databaseAnotations[index].value = item.value;
+    databaseAnotations[index].description = item.description;
     databaseAnotations[index].date = item.date;
+    databaseAnotations[index].archived = item.archived;
 
     return databaseAnotations[index];
   }

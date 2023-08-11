@@ -5,31 +5,34 @@ export function verifyCreateAnotation(
   res: Response,
   next: NextFunction
 ) {
-  const { title, value, date } = req.body;
+  const { title, description, date } = req.body;
 
-  if (!title || !value || !date) {
+  if (!title || !description || !date) {
     return res.status(400).json({
-      error:
-        "É necessário que todos os campos sejam preenchidos, para criar uma anotação.",
+      message:
+        "Todos os campos precisam estar preenchidos para a criação de uma anotação.",
+      success: false,
     });
   }
 
   if (!title) {
     return res.status(400).json({
-      error: "É necessário adicionar um título para criar uma anotação.",
+      message: "A propriedade título não foi preenchida. Tente novamente.",
+      success: false,
     });
   }
 
-  if (!value) {
+  if (!description) {
     return res.status(400).json({
-      error:
-        "É necessário adicionar um valor/descrição para criar uma anotação.",
+      message: "A propriedade descrição não foi preenchida. Tente novamente.",
+      success: false,
     });
   }
 
   if (!date) {
     return res.status(400).json({
-      error: "É necessário adicionar uma data para criar a anotação.",
+      message: "A propriedade data não foi preenchida. Tente novamente.",
+      success: false,
     });
   }
   next();

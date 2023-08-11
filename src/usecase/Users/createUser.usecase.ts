@@ -1,4 +1,4 @@
-import { UsersRepository } from "../../repositories";
+import { usersRepository } from "../../server";
 
 export type UserDTO = {
   name: string;
@@ -13,25 +13,23 @@ type ResponseCreate = {
 };
 
 export class CreateUser {
-  execute(dados: UserDTO): ResponseCreate {
-    const repository = new UsersRepository();
-
-    const usersExists = repository
+  execute(data: UserDTO): ResponseCreate {
+    const usersExists = usersRepository
       .listUsers()
-      .some((user) => user.email === dados.email);
+      .some((user) => user.email === data.email);
 
     if (usersExists) {
       return {
+        message: "Não foi possível criar uma conta. Tente novamente!",
         success: false,
-        message: "Já existe um usário com o e-mail inserido.",
       };
     }
 
-    const userCreated = repository.createUser(dados);
+    const userCreated = usersRepository.createUser(data);
 
     return {
-      success: true,
       message: "Conta criada com sucesso!",
+      success: true,
       data: userCreated,
     };
   }

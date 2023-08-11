@@ -16,7 +16,7 @@ import {
   verifyUpdateAnotation,
   verifyUserExist,
 } from "./middlewares";
-import { AnotationRepository } from "./repositories";
+import { AnotationRepository, UsersRepository } from "./repositories";
 
 const app = express();
 const userController = new UserController();
@@ -34,6 +34,7 @@ app.listen(process.env.PORT, () =>
 );
 
 export const anotationRepository = new AnotationRepository();
+export const usersRepository = new UsersRepository();
 
 app.get("/", (request: Request, response: Response) => {
   return response.send({ message: "OK" });
@@ -48,7 +49,7 @@ app.post("/users/signin", validateLoginUser, userController.login);
 // ROTA DE CRIAÇÃO DE ANOTAÇÃO
 const createAnotationController = new CreateAnotationController();
 app.post(
-  "/user/:userId/anotation",
+  "/users/:userId/anotation",
   verifyCreateAnotation,
   verifyUserExist,
   createAnotationController.execute
@@ -57,7 +58,7 @@ app.post(
 // ROTA PARA LISTAR TODAS AS ANOTAÇÕES
 const getAllAnotationsController = new GetAllAnoationsController();
 app.get(
-  "/user/:userId/anotation",
+  "/users/:userId/anotation",
   verifyUserExist,
   getAllAnotationsController.execute
 );
@@ -65,7 +66,7 @@ app.get(
 // ROTA PARA LISTAR ANOTAÇÃO ESPECÍFICA
 const getAnotationController = new GetAnotationController();
 app.get(
-  "/user/:userId/anotation/:id",
+  "/users/:userId/anotation/:id",
   verifyUserExist,
   getAnotationController.execute
 );
@@ -73,7 +74,7 @@ app.get(
 // ROTA PARA DELETAR ANOTAÇÃO
 const deleteAnotationController = new DeleteAnotationController();
 app.delete(
-  "/user/:userId/anotation/:id",
+  "/users/:userId/anotation/:id",
   verifyUserExist,
   deleteAnotationController.execute
 );
@@ -81,7 +82,7 @@ app.delete(
 // ROTA PARA ATUALIZAÇÃO ANOTAÇÃO
 const updateAnotationController = new UpdateAnotationController();
 app.put(
-  "/user/:userId/anotation/:id",
+  "/users/:userId/anotation/:id",
   verifyUserExist,
   verifyUpdateAnotation,
   updateAnotationController.execute

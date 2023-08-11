@@ -6,8 +6,9 @@ type DeleteAnotationRequestDTO = {
 };
 
 type DeleteAnotationResponseDTO = {
-  status: string;
-  anotation: Anotation;
+  message: string;
+  success: boolean;
+  anotation?: Anotation;
 };
 
 export class DeleteAnotationUseCase {
@@ -19,11 +20,15 @@ export class DeleteAnotationUseCase {
     const anotation = this.anotationRepository.deleteAnotation(id);
 
     if (!anotation) {
-      throw new Error("Anotação não encontrada para este usuário!");
+      return {
+        message: "Anotação não encontrada para este usuário. Tente novamente!",
+        success: false,
+      };
     }
 
     return {
-      status: "Anotação deletada com sucesso!",
+      message: "Anotação deletada com sucesso!",
+      success: true,
       anotation,
     };
   }

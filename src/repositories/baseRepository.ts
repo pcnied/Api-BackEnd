@@ -5,8 +5,9 @@ export abstract class BaseRepository<A> implements BaseRepositoryInterface<A> {
     this.repository = repository;
   }
 
-  getOne(key: string, value: string): A | undefined {
-    return this.repository.find((item) => item[key as keyof A] == value);
+  getByOne(key: string, value: string): A | undefined {
+    const item = this.repository.find((item) => item[key as keyof A] === value);
+    return item || undefined;
   }
 
   getAll(): A[] {

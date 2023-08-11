@@ -6,21 +6,31 @@ import { AnotationRepository } from "../../repositories";
 // };
 
 export type GetAllAnotationsResponseDTO = {
-  status: string;
+  message: string;
+  success: boolean;
   anotations: Anotation[];
 };
 
 export class GetAllAnotationsUseCase {
   constructor(private anotationRepository: AnotationRepository) {}
 
-  execute(userId: string) {
-    const anotations = this.anotationRepository.getAllAnotations(userId);
+  execute(
+    userId: string,
+    archived: boolean,
+    title?: string
+  ): GetAllAnotationsResponseDTO {
+    const anotations = this.anotationRepository.getAllAnotations(
+      userId,
+      archived,
+      title
+    );
 
     return {
-      status:
+      message:
         anotations.length > 0
           ? "Anotações encontradas com sucesso!"
-          : "Nenhuma anotação cadastrada ainda!",
+          : "Nenhuma anotação encontrada!",
+      success: true,
       anotations,
     };
   }
