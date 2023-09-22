@@ -7,21 +7,19 @@ import {
 
 export class UpdateAnotationController {
   execute(req: Request, res: Response) {
-    try {
-      const { id } = req.params;
+    const { id } = req.params;
 
-      const data: UpdateAnotationRequestDTO = req.body;
+    const data: UpdateAnotationRequestDTO = req.body;
 
-      const updateAnotationUseCase = new UpdateAnotationUseCase(
-        anotationRepository
-      );
-      const response = updateAnotationUseCase.execute(id, data);
+    const updateAnotationUseCase = new UpdateAnotationUseCase(
+      anotationRepository
+    );
+    const response = updateAnotationUseCase.execute(id, data);
 
-      return res.status(200).json(response);
-    } catch (error: any) {
-      return res.status(400).json({
-        error: error.message,
-      });
+    if (!response.success) {
+      return res.status(404).json(response);
     }
+
+    return res.status(200).json(response);
   }
 }

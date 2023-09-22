@@ -4,20 +4,18 @@ import { GetAnotationUseCase } from "../../usecase";
 
 export class GetAnotationController {
   execute(req: Request, res: Response) {
-    try {
-      const { id } = req.params;
+    const { id } = req.params;
 
-      const getAnotationUseCase = new GetAnotationUseCase(anotationRepository);
+    const getAnotationUseCase = new GetAnotationUseCase(anotationRepository);
 
-      const response = getAnotationUseCase.execute({
-        id,
-      });
+    const response = getAnotationUseCase.execute({
+      id,
+    });
 
-      return res.status(200).json(response);
-    } catch (error: any) {
-      return res.status(400).json({
-        error: error.message,
-      });
+    if (!response.success) {
+      return res.status(404).json(response);
     }
+
+    return res.status(200).json(response);
   }
 }

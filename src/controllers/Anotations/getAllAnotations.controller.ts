@@ -18,6 +18,10 @@ export class GetAllAnoationsController {
       title ? String(title) : undefined
     );
 
+    if (!response.success) {
+      return res.status(404).json(response);
+    }
+
     return res.status(200).json(response);
   }
 }
