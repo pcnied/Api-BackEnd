@@ -7,8 +7,8 @@ export type UserDTO = {
 };
 
 type ResponseCreate = {
+  status: string;
   success: boolean;
-  message: string;
   data?: UserDTO & { id: string };
 };
 
@@ -20,7 +20,7 @@ export class CreateUser {
 
     if (usersExists) {
       return {
-        message: "Não foi possível criar uma conta. Tente novamente!",
+        status: "E-mail já cadastrado. Tente novamente!",
         success: false,
       };
     }
@@ -28,7 +28,7 @@ export class CreateUser {
     const userCreated = usersRepository.createUser(data);
 
     return {
-      message: "Conta criada com sucesso!",
+      status: "Conta criada com sucesso!",
       success: true,
       data: userCreated,
     };

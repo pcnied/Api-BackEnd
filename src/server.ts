@@ -29,8 +29,10 @@ app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 // Converte caractéres especiais nas URL's
 
-app.listen(process.env.PORT, () =>
-  console.log("Servidor iniciado", process.env.PORT)
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => 
+  console.log(`Servidor iniciado na porta ${PORT}`)
 );
 
 export const anotationRepository = new AnotationRepository();

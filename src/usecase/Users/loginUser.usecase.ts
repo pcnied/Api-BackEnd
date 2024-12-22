@@ -6,8 +6,8 @@ export type LoginUserDTO = {
 };
 
 type ResponseLoginUser = {
+  status: string;
   success: boolean;
-  message: string;
   id?: string;
 };
 
@@ -17,15 +17,15 @@ export class LoginUser {
 
     if (!searchUser) {
       return {
+        status: "O usuário não foi encontrado pelo e-mail informado.",
         success: false,
-        message: "O usuário não foi encontrado pelo ID.",
         id: searchUser,
       };
     }
 
     return {
+      status: "Login efetuado com sucesso!",
       success: true,
-      message: "Login efetuado com sucesso!",
       id: searchUser,
     };
   }

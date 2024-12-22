@@ -9,7 +9,7 @@ export type CreateAnotationRequestDTO = {
 };
 
 export type CreateAnotationResponseDTO = {
-  message: string;
+  status: string;
   success: boolean;
   anotation: Anotation;
 };
@@ -24,7 +24,7 @@ export class CreateAnotationUseCase {
     this.anotationRepository.createAnotation(anotation);
 
     return {
-      message: "Anotação criada com sucesso!",
+      status: "Anotação criada com sucesso!",
       success: true,
       anotation,
     };

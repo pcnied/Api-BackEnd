@@ -12,7 +12,7 @@ export function verifyUserExist(
 
   if (!user) {
     return res.status(404).json({
-      message: "Usuário não encontrado pelo ID informado.",
+      status: "Usuário não encontrado pelo ID informado.",
       success: false,
     });
   }
