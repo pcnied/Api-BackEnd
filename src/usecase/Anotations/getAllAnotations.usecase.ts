@@ -1,12 +1,8 @@
 import { Anotation } from "../../models";
 import { AnotationRepository } from "../../repositories";
 
-// export type GetAllAnotationsRequestParamsDTO = {
-//   title?: string;
-// };
-
 export type GetAllAnotationsResponseDTO = {
-  message: string;
+  status: string;
   success: boolean;
   anotations: Anotation[];
 };
@@ -26,7 +22,7 @@ export class GetAllAnotationsUseCase {
     );
 
     return {
-      message:
+      status:
         anotations.length > 0
           ? "Anotações encontradas com sucesso!"
           : "Nenhuma anotação encontrada!",

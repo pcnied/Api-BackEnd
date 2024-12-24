@@ -16,14 +16,14 @@ export function verifyCreateAnotation(
 
   if (!description) {
     return res.status(400).json({
-      status: "A propriedade descrição não foi preenchida. Tente novamente.",
+      status: "A descrição não foi preenchida. Tente novamente.",
       success: false,
     });
   }
 
   if (!date) {
     return res.status(400).json({
-      status: "A propriedade data não foi preenchida. Tente novamente.",
+      status: "A  data não foi preenchida. Tente novamente.",
       success: false,
     });
   }

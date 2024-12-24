@@ -9,7 +9,7 @@ export type UpdateAnotationRequestDTO = {
 };
 
 export type UpdateAnotationResponseDTO = {
-  message: string;
+  status: string;
   success: boolean;
   anotation?: Anotation | undefined;
 };
@@ -27,7 +27,19 @@ export class UpdateAnotationUseCase {
 
     if (!anotation) {
       return {
-        message: "Não foi possível atualizar a anotação. Tente novamente!",
+        status: "Não foi possível atualizar a anotação. Tente novamente!",
+        success: false,
+      };
+    }
+
+    const isTitleChanged = title && title.trim() !== "" && title !== anotation.title;
+    const isDescriptionChanged = description && description.trim() !== "" && description !== anotation.description;
+    const isDateChanged = date && date.trim() !== "" && date !== anotation.date;
+    const isArchivedChanged = archived !== undefined && archived !== anotation.archived;
+
+    if (!isTitleChanged && !isDescriptionChanged && !isDateChanged && !isArchivedChanged) {
+      return {
+        status: "É necessário editar pelo menos um dos campos.",
         success: false,
       };
     }
@@ -40,7 +52,7 @@ export class UpdateAnotationUseCase {
     });
 
     return {
-      message: "Anotação atualizada com sucesso!",
+      status: "Anotação atualizada com sucesso!",
       success: true,
       anotation: anotationUpdated,
     };

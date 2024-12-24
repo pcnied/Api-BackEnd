@@ -6,7 +6,7 @@ type DeleteAnotationRequestDTO = {
 };
 
 type DeleteAnotationResponseDTO = {
-  message: string;
+  status: string;
   success: boolean;
   anotation?: Anotation;
 };
@@ -21,13 +21,13 @@ export class DeleteAnotationUseCase {
 
     if (!anotation) {
       return {
-        message: "Anotação não encontrada para este usuário. Tente novamente!",
+        status: "Anotação não encontrada para este usuário. Tente novamente!",
         success: false,
       };
     }
 
     return {
-      message: "Anotação deletada com sucesso!",
+      status: "Anotação deletada com sucesso!",
       success: true,
       anotation,
     };
